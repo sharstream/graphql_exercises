@@ -22,7 +22,11 @@
 // # Answer: You can find the solution at http://knowthen.com/gql5A
 
 {
-  reviews(status: [APPROVED FLAGGED], page: 1, first: 3) {
+  "status": ["APPROVED", "FLAGGED"]
+}
+
+query ModeratorReviewsVer1 ($status: [ReviewStatus!]){
+  reviews(status: $status, page: 1, first: 3) {
     book {
       title
     }
@@ -58,8 +62,8 @@
 // #
 // # ANSWER: http://knowthen.com/gql6A
 
-{
-  reviews(status: FLAGGED) {
+query ModeratorReviewsVer2 ($status: [ReviewStatus!]){
+  reviews(status: $status) {
     rating
     status
     user {
