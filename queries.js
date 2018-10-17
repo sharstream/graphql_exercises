@@ -72,3 +72,25 @@ query ModeratorReviewsVer2 ($status: [ReviewStatus!]){
     }
   }
 }
+
+# Challenge: Find the one interface used on this server
+# HINT: Ask yourself what object types would likely
+# have many common/shared fields
+# After you've found the interface, figure out where
+# it's used.
+#
+# Answer: You can find the solution at http://knowthen.com/gql8A
+
+interface Person {
+  id: ID!
+  firstName: String
+  lastName: String
+}
+
+type Author implements Person {
+  books: [Book!]
+}
+
+type User implements Person {
+  reviews: [Review!]
+}
