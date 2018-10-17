@@ -133,3 +133,35 @@ query twoBooks{
   	...BookFields
 	}
 }
+
+// # Challenge: Add inline fragments for Author, User and Review types
+// # For author results, include the authors: first and last name,
+// # and the title of the authors books
+// # For user results, include the user's first and last names,
+// # and the title of any books the user has reviewed
+// # For Review results, include the rating, comment and the books title
+// # HINT: What your adding to this query, will look very similar to the
+// # inline (conditional) fragment for the Book type you see below...
+// # Answer: you can find the completed query at: http://knowthen.com/gql10A
+
+query SearchQuery {
+  search(term: "Dan"){
+    __typename
+    ... on Book {
+      title
+      subtitle
+      authors {firstName lastName}
+    }
+    ... on Author {
+      firstName
+      lastName
+      books{title}
+    }
+    ... on Review {
+      book{title}
+      comment
+      rating
+      user{firstName lastName}
+    }
+  }
+}
