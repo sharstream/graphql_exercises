@@ -1,25 +1,25 @@
-// # Challenge: create a graphql query the returns a response
-// # in the following shape:
-// # {
-// #   "data": {
-// #     "books": [
-// #       {
-// #         "title": "...",
-// #         "reviews": [
-// #           {
-// #             "rating": 5,
-// #             "user": {
-// #               "firstName": "...",
-// #               "lastName": "..."
-// # 					}
-// #         ]
-// #       }
-// #     ]
-// #   }
-// # }
-// # Important: put a comment next to each field
-// # with a description of it's data type
-// # Answer: You can find the solution at http://knowthen.com/gql5A
+# Challenge: create a graphql query the returns a response
+# in the following shape:
+# {
+#   "data": {
+#     "books": [
+#       {
+#         "title": "...",
+#         "reviews": [
+#           {
+#             "rating": 5,
+#             "user": {
+#               "firstName": "...",
+#               "lastName": "..."
+# 					}
+#         ]
+#       }
+#     ]
+#   }
+# }
+# Important: put a comment next to each field
+# with a description of it's data type
+# Answer: You can find the solution at http://knowthen.com/gql5A
 
 {
   "status": ["APPROVED", "FLAGGED"]
@@ -39,28 +39,28 @@ query ModeratorReviewsVer1 ($status: [ReviewStatus!]){
   }
 }
 
-// # Challenge: create a graphql query the returns a response
-// # in the following shape:
-// # {
-// #   "data": {
-// #     "reviews": [
-// #       {
-// #         "rating": "...",
-// #         "comment": "...",
-// #         "status": "FLAGGED",
-// #         "user": {
-// #           "firstName": "...",
-// #           "lastName": "...",
-// #          }
-// #       }
-// #     ]
-// #   }
-// # }
-// #
-// # IMPORTANT: The results should only include reviews
-// # that have been flagged for review
-// #
-// # ANSWER: http://knowthen.com/gql6A
+# Challenge: create a graphql query the returns a response
+# in the following shape:
+# {
+#   "data": {
+#     "reviews": [
+#       {
+#         "rating": "...",
+#         "comment": "...",
+#         "status": "FLAGGED",
+#         "user": {
+#           "firstName": "...",
+#           "lastName": "...",
+#          }
+#       }
+#     ]
+#   }
+# }
+#
+# IMPORTANT: The results should only include reviews
+# that have been flagged for review
+#
+# ANSWER: http://knowthen.com/gql6A
 
 query ModeratorReviewsVer2 ($status: [ReviewStatus!]){
   reviews(status: $status) {
@@ -78,7 +78,7 @@ query ModeratorReviewsVer2 ($status: [ReviewStatus!]){
 # have many common/shared fields
 # After you've found the interface, figure out where
 # it's used.
-#
+
 # Answer: You can find the solution at http://knowthen.com/gql8A
 
 interface Person {
