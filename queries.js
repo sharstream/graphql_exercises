@@ -94,3 +94,21 @@ type Author implements Person {
 type User implements Person {
   reviews: [Review!]
 }
+
+# Alias and fragments
+fragment BookFields on Book{
+  title
+  subtitle
+  description
+  pageCount
+  rating
+}
+
+query twoBooks{
+  Book1: book(id: "1"){
+  	...BookFields
+	}
+  Book2: book(id: "2"){
+  	...BookFields
+	}
+}
