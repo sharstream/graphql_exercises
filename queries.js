@@ -96,12 +96,33 @@ type User implements Person {
 }
 
 # Alias and fragments
+# Challenge: Create a fragment on the User type
+# that includes the user first and last names.
+# Then create a query for 2 seperate users (id's 1 and 2)
+# The 2 user queries should use the newly created
+# Fragment.
+#
+# Answer: You can find the solution at http://knowthen.com/gql9A
 fragment BookFields on Book{
   title
   subtitle
   description
   pageCount
   rating
+}
+
+fragment UserFields on User{
+  firstName
+  lastName
+}
+
+query RunUsers{
+  user1: user(id: "1"){
+    ...UserFields
+  }
+  user2: user(id: "2"){
+    ...UserFields
+  }
 }
 
 query twoBooks{
