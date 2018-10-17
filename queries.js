@@ -22,17 +22,19 @@
 // # Answer: You can find the solution at http://knowthen.com/gql5A
 
 {
-  "status": ["APPROVED", "FLAGGED"]
+  "status": ["APPROVED", "FLAGGED"],
+  "includeUser": false,
+  "skipReview": true
 }
 
-query ModeratorReviewsVer1 ($status: [ReviewStatus!]){
+query ModeratorReviewsVer1 ($status: [ReviewStatus!], $includeUser: Boolean!){
   reviews(status: $status, page: 1, first: 3) {
     book {
       title
     }
     rating
     status
-    user {
+    user @include(if: $includeUser) {
       firstName
       lastName
     }
@@ -62,11 +64,11 @@ query ModeratorReviewsVer1 ($status: [ReviewStatus!]){
 // #
 // # ANSWER: http://knowthen.com/gql6A
 
-query ModeratorReviewsVer2 ($status: [ReviewStatus!]){
+query ModeratorReviewsVer2($status: [ReviewStatus!], $includeUser: Boolean!){
   reviews(status: $status) {
     rating
     status
-    user {
+    user @include(if: $includeUser) {
       firstName
       lastName
     }
@@ -162,6 +164,22 @@ query SearchQuery {
       comment
       rating
       user{firstName lastName}
+    }
+  }
+}
+
+// Challenge: Use the skip directive and a variable# to optionally skip the reviews in the below query.
+
+// # Answer: you can find the completed query at: http: //knowthen.com/gql11A
+
+query Books($skipReview: Boolean!) {
+  books {
+    title
+    subtitle
+    id
+    reviews @skip(if: $skipReview) {
+      comment
+      rating
     }
   }
 }
