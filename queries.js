@@ -183,3 +183,31 @@ query Books($skipReview: Boolean!) {
     }
   }
 }
+
+// # Challenge:
+// # Open the document explorer and go into the
+// # mutation root type. Find the mutation to add a user
+// # Then add yourself as a user
+// # Make sure you return the ID that's assigned to you.
+// # Next, create a query for your new user, using the
+// # user query field.
+// #
+// # NOTE: You're new users will get wiped out after a short
+// # period of time, so if you added a user yesterday, it's
+// # not going to exist today... It might not even exist after a
+// # few minutes :)
+
+mutation AddUser{
+  addUser(user: {firstName: "Dave",
+    lastName: "Perez",}){
+    firstName
+    lastName
+  }
+}
+
+query User{
+  users{
+    firstName
+    lastName
+  }
+}
