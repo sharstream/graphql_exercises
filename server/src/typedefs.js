@@ -12,9 +12,21 @@ type Book {
   title: String!
   description: String!
   imageUrl(size: ImageSize = LARGE): String!
-  rating: Float,
-  subtitle: String,
+  rating: Float
+  subtitle: String
   ratingCount: Int
+  authors: [Author]
+  reviews: [Review]
+}
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Review {
+  id: ID!
+  title: String
 }
 
 enum ImageSize {
