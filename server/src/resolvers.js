@@ -5,7 +5,12 @@ import { auhtorsByBookId } from './author';
 const resolvers = {
   Book: {
     imageUrl: (book, { size }) => imageUrl(size, book.googleId),
-    authors: book => auhtorsByBookId(book.id),
+    authors: (book, args, context) => {
+      const { loaders } = context;
+      const { findAuthorsByBookIdsLoader } = loaders;
+      return findAuthorsByBookIdsLoader.load(book.id);
+      // auhtorsByBookId(book.id)
+    },
     // reviews: book => reviewsByBookId(book.id),
     // ratingCount: book => book.rating_count
     // title: book => {
