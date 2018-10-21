@@ -33,10 +33,10 @@ const resolvers = {
     },
   },
   Query: {
-    books: () => {
-      return allBooks();
+    books: (root, args) => {
+      return allBooks(args);
     },
-    reviews: () => allReviews(),
+    reviews: (root, args) => allReviews(args),
     users: () => allUsers(),
   }
 };
