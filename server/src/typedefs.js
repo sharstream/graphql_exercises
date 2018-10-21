@@ -5,7 +5,7 @@ schema {
 
 type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book]
-  reviews(orderBy: ReviewOrderBy = ID_ASC): [Review]
+  reviews(orderBy: ReviewOrderBy = ID_DESC): [Review]
   users: [User]
 }
 
