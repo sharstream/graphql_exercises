@@ -1,5 +1,6 @@
-import { allBooks, imageUrl } from './book';
-import { auhtorsByBookId } from './author';
+import { allBooks, imageUrl, findBookById } from './book';
+// import { auhtorsByBookId } from './author';
+import { allReviews } from './review';
 // import { reviewsByBookId } from './review';
 
 const resolvers = {
@@ -17,10 +18,19 @@ const resolvers = {
     //   return `${book.title} (from resolvers)`;
     // }
   },
+  Review: {
+    book: (review, args, context) => {
+      const { loaders } = context;
+      const { findBooksByIdsLoader } = loaders;
+      return findBooksByIdsLoader.load(review.id);
+      // findBookById(review.bookId)
+    }
+  },
   Query: {
     books: () => {
       return allBooks();
     },
+    reviews: () => allReviews(),
   }
 };
 

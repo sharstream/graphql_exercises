@@ -1,16 +1,11 @@
 import query from './db';
 
-export async function reviewsByBookId(id) {
+export async function allReviews() {
   const sql = `
-  select
-  hb.review.*
-  from hb.review inner join hb.book_review
-    on hb.review.id = hb.book_review.review_id
-  where hb.book_review.book_id = $1
+  select * from hb.review
   `;
-  const params = [id];
   try {
-    const result = await query(sql, params);
+    const result = await query(sql);
     return result.rows;
   } catch (err) {
     console.log(err);

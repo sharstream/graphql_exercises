@@ -5,6 +5,7 @@ schema {
 
 type Query {
   books: [Book]
+  reviews: [Review]
 }
 
 type Book {
@@ -26,7 +27,10 @@ type Author {
 
 type Review {
   id: ID!
+  rating: Int
   title: String
+  comment: String
+  book: Book
 }
 
 enum ImageSize {
