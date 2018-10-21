@@ -1,12 +1,12 @@
 import { groupBy, map } from 'ramda';
-//avoid N+1 problem in queries
+//avoid N+1 problem in single queries request
 import DataLoader from 'dataloader';
 import query from './db';
 
 export async function findAuthorsByBookIds(ids) {
   const sql = `
   select
-  hb.author.*
+  hb.author.*,
   hb.book_author.book_id
   from hb.author inner join hb.book_author
     on hb.author.id = hb.book_author.author_id
@@ -14,7 +14,7 @@ export async function findAuthorsByBookIds(ids) {
   `;
   const params = [ids];
   try {
-    const resutl = await query(sql, params);
+    const result = await query(sql, params);
     // book ids // sortd authors
     const rowsById = groupBy(author => author.bookId, result.rows);
     //transformation function using map
