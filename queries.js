@@ -212,18 +212,40 @@ query User{
   }
 }
 
-query {
-  books(orderBy: RATING_DESC) {
-    title
+{
+  "orderBy": "RATING_DESC"
+}
+
+fragment Book on Book {
+  id
+  title
+  rating
+  description
+  rating
+}
+
+fragment Review on Review {
+  id
+  title
+  rating
+  comment
+  user {
+    name
+  }
+}
+query Home($orderBy: BooksOrderBy!){
+  books(orderBy: $orderBy) {
+    ...Book
+    imageUrl
     authors {
       name
     }
-    rating
-    description
   }
-  reviews(orderBy: ID_DESC) {
-    title
-    comment
-    rating
+  reviews {
+    ...Review
+    book {
+      ...Book
+      imageUrl(size:SMALL)
+    }
   }
 }
