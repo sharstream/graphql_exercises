@@ -22,7 +22,7 @@ const resolvers = {
     book: (review, args, context) => {
       const { loaders } = context;
       const { findBooksByIdsLoader } = loaders;
-      return findBooksByIdsLoader.load(review.id);
+      return findBooksByIdsLoader.load(review.bookId);
       // findBookById(review.bookId)
     }
   },
