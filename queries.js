@@ -211,3 +211,19 @@ query User{
     lastName
   }
 }
+
+query {
+  books(orderBy: RATING_DESC) {
+    title
+    authors {
+      name
+    }
+    rating
+    description
+  }
+  reviews(orderBy: ID_DESC) {
+    title
+    comment
+    rating
+  }
+}
