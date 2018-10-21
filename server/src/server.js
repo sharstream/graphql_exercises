@@ -6,7 +6,8 @@ import { makeExecutableSchema } from 'graphql-tools';
 import { graphql } from 'graphql';
 import typeDefs from './typedefs.js';
 import resolvers from './resolvers.js';
-import { findAuthorsByBookIdsLoader } from './author'
+// import { findAuthorsByBookIdsLoader } from './author';
+import loaders from './loader';
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
@@ -19,11 +20,10 @@ app.use('/graphql',
   graphqlExpress(() => ({
     schema,
     context: {
-      loaders: {
-        findAuthorsByBookIdsLoader: findAuthorsByBookIdsLoader()
-      }
+      loaders: loaders()
     }
-  })));
+  }))
+);
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
