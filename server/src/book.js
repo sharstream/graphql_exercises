@@ -12,6 +12,11 @@ async function findBooksByIds(ids) {
   try {
     const result = await query(sql, params);
     const rowsById = groupBy((book) => book.id, result.rows);
+    console.log(rowsById);
+    console.log(map(id => {
+      const book = rowsById[id] ? rowsById[id][0] : null;
+      return book;
+    }, ids));
     return map(id => {
       const book = rowsById[id] ? rowsById[id][0] : null;
       return book;
