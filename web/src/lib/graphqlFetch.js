@@ -15,5 +15,7 @@ const options = {
 export default url => args => {
   const body = JSON.stringify(args);
   return fetch(url, { ...options, body})
-          .then(res =>  res.json());
+          .then(res =>  res.json())
+          // .then(res => console.log('Success: ', JSON.stringify(res)))
+          .catch(err => console.error('Error: ', err));
 }
