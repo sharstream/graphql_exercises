@@ -7,6 +7,7 @@ type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   reviews(orderBy: ReviewOrderBy = ID_DESC): [Review]
   users: [User]
+  book(id: ID!): Book
 }
 
 enum ReviewOrderBy {

@@ -38,6 +38,11 @@ const resolvers = {
     },
     reviews: (root, args) => allReviews(args),
     users: () => allUsers(),
+    book: (root, args, context) => {
+      const { loaders } = context;
+      const { findBooksByIdsLoader } = loaders;
+      return findBooksByIdsLoader.load(args.id);
+    },
   }
 };
 
