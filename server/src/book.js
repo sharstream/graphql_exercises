@@ -70,5 +70,6 @@ export async function allBooks(args) {
 
 export function imageUrl(size, id) {
   const zoom = size === 'SMALL' ? 1 : 0;
-  return `http://books.google.com/books/content?id=-${id}&printsec=frontcover&img=1&zoom=${zoom}&source=gbs_api`;
+  //books.google.com/books/content?printsec=frontcover&img=1&edge=curl&source=gbs_api&zoom=0&id=POOJDQAAQBAJ
+  return `//books.google.com/books/content?printsec=frontcover&img=1&edge=curl&source=gbs_api&zoom=${zoom}&id=${id}`;
 }
