@@ -1,3 +1,4 @@
+import gravatar from 'gravatar';
 import { allBooks, imageUrl, findBookById } from './book';
 // import { auhtorsByBookId } from './author';
 import { allReviews } from './review';
@@ -5,6 +6,9 @@ import { allUsers } from './user';
 // import { reviewsByBookId } from './review';
 
 const resolvers = {
+  User: {
+    imageUrl: (user, args) => gravatar.url(user.email, { s: args.size }),
+  },
   Book: {
     imageUrl: (book, { size }) => imageUrl(size, book.googleId),
     authors: (book, args, context) => {

@@ -49,6 +49,7 @@ type Review {
 type User {
   id: ID!
   name: String!
+  imageUrl(size: Int = 50): String
 }
 
 enum ImageSize {
