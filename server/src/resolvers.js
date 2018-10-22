@@ -13,7 +13,11 @@ const resolvers = {
       return findAuthorsByBookIdsLoader.load(book.id);
       // auhtorsByBookId(book.id)
     },
-    // reviews: book => reviewsByBookId(book.id),
+    reviews: (book, args, context) => {
+      const { loaders } = context;
+      const { findReviewsByBookIdsLoader } = loaders;
+      return findReviewsByBookIdsLoader.load(book.id)
+    },
     // ratingCount: book => book.rating_count
     // title: book => {
     //   return `${book.title} (from resolvers)`;

@@ -29,6 +29,7 @@ type Book {
   subtitle: String
   ratingCount: Int
   authors: [Author]
+  reviews: [Review]
 }
 
 type Author {
