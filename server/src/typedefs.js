@@ -20,7 +20,7 @@ input ReviewInput {
   rating: Int!
   name: String!
   email: String!
-  titlew: String
+  title: String
   comment: String
 }
 
