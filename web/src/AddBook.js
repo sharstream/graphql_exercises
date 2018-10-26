@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { BookSearchForm, BookSearchResults } from './components/Book';
 import Error from './components/Error';
+import fetch from './fetch';
 
 const query = `
 fragment SearchBook on SearchBookResult {
@@ -36,7 +37,7 @@ class AddBook extends Component {
     const { term } = this.state;
     try {
       // TODO: fetch actual search results using graphql
-      const variables = { query: term};
+      const variables = { query: term };
       const result = await fetch({ query, variables });
       const results = pathOr([], ['data', 'searchBook'], result);
       const errorList = pathOr([], ['errors'], result);
