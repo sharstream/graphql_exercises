@@ -12,7 +12,6 @@ async function findUsersByIds(ids) {
   try {
     const result = await query(sql, params);
     const rowsByIds = groupBy( user => user.id, result.rows);
-    console.log(`users ids: ${rowsByIds}`);
     return map(id => {
       const user = rowsByIds[id] ? rowsByIds[id][0] : null;
       return user;

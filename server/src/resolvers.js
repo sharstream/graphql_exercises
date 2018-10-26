@@ -1,13 +1,14 @@
 import gravatar from 'gravatar';
-import { allBooks, imageUrl, findBookById } from './book';
-// import { auhtorsByBookId } from './author';
+import { allBooks, imageUrl, searchBook } from './book';
 import { allReviews, createReview } from './review';
 import { allUsers } from './user';
-// import { reviewsByBookId } from './review';
 
 const resolvers = {
   User: {
     imageUrl: (user, args) => gravatar.url(user.email, { s: args.size }),
+  },
+  SearchBookResult: {
+    imageUrl: (result, args) => imageUrl(args.size, result.id),
   },
   Book: {
     imageUrl: (book, { size }) => imageUrl(size, book.googleId),
@@ -15,24 +16,18 @@ const resolvers = {
       const { loaders } = context;
       const { findAuthorsByBookIdsLoader } = loaders;
       return findAuthorsByBookIdsLoader.load(book.id);
-      // auhtorsByBookId(book.id)
     },
     reviews: (book, args, context) => {
       const { loaders } = context;
       const { findReviewsByBookIdsLoader } = loaders;
       return findReviewsByBookIdsLoader.load(book.id)
     },
-    // ratingCount: book => book.rating_count
-    // title: book => {
-    //   return `${book.title} (from resolvers)`;
-    // }
   },
   Review: {
     book: (review, args, context) => {
       const { loaders } = context;
       const { findBooksByIdsLoader } = loaders;
       return findBooksByIdsLoader.load(review.bookId);
-      // findBookById(review.bookId)
     },
     user: (review, args, context) => {
       const { loaders } = context;
@@ -50,6 +45,10 @@ const resolvers = {
       const { loaders } = context;
       const { findBooksByIdsLoader } = loaders;
       return findBooksByIdsLoader.load(args.id);
+    },
+    searchBook: (root, args) => {
+      const { query } = args;
+      return searchBook(query);
     },
   },
   Mutation: {

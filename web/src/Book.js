@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import { BookDetail } from './components/Book';
 import { BookDetailReviews } from './components/Book';
 import Error from './components/Error';
-import data from './data';
 import fetch from './fetch';
 
 const findBookById = (id, books) => R.find(R.propEq('id', id), books);

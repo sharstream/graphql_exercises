@@ -4,10 +4,7 @@ import * as R from 'ramda';
 import * as EmailValidator from 'email-validator';
 import { Book, BookReviewForm } from './components/Book';
 import Error from './components/Error';
-import data from './data';
 import fetch from './fetch';
-
-const findBookById = (id, books) => R.find(R.propEq('id', id), books);
 
 const query = `
 fragment Book on Book {
@@ -24,6 +21,14 @@ query Book($id: ID!) {
     authors{
       name
     }
+  }
+}
+`;
+
+const createReviewMutation = `
+mutation CreateReview($reviewInput: ReviewInput!) {
+  createReview(reviewInput: $reviewInput) {
+    id
   }
 }
 `;
@@ -76,8 +81,22 @@ class BookReview extends Component {
     const { name, count, email, title, comment } = reviewInput;
     // TODO: add actual mutation to add new review
     try {
-      const errors = [];
-      this.setState({ redirect: true, errors });
+      const variables = {
+        reviewInput: {
+          bookId: book.id,
+          rating:count,
+          name,
+          email,
+          title,
+          comment,
+        },
+      };
+      const result = await fetch({ query: createReviewMutation, variables});
+      const id = R.path(['data', 'createReview', 'id'], result);
+      const errorList = R.pathOr([], ['errors'], result);
+      const errors = R.map(error=>error.message, errorList);
+      const redirect = !!id;
+      this.setState({ redirect, errors });
     } catch (err) {}
   };
   render() {

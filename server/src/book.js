@@ -1,7 +1,22 @@
-import { groupBy, map } from 'ramda';
+import { groupBy, map, pathOr } from 'ramda';
+import axios from 'axios';
 import DataLoader from 'dataloader';
 import query from './db';
 
+export async function searchBook(query) {
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`;
+  try {
+    const result = await axios(url);
+    const items = pathOr([],['data', 'items'], result);
+    console.log('items: ' + items);
+    const books = map(book => ({ id: book.id, ...book.volumeInfo}), items);
+    console.log('books: ' + books);
+    return books;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 async function findBooksByIds(ids) {
   const sql = `
   select *
@@ -12,11 +27,11 @@ async function findBooksByIds(ids) {
   try {
     const result = await query(sql, params);
     const rowsById = groupBy((book) => book.id, result.rows);
-    console.log(rowsById);
-    console.log(map(id => {
-      const book = rowsById[id] ? rowsById[id][0] : null;
-      return book;
-    }, ids));
+    // console.log(rowsById);
+    // console.log(map(id => {
+    //   const book = rowsById[id] ? rowsById[id][0] : null;
+    //   return book;
+    // }, ids));
     return map(id => {
       const book = rowsById[id] ? rowsById[id][0] : null;
       return book;
