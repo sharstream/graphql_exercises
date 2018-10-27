@@ -4,6 +4,7 @@ schema {
   mutation: Mutation
 }
 
+# root query for our **Hackbook Server**
 type Query {
   books(orderBy: BooksOrderBy = RATING_DESC): [Book]
   reviews(orderBy: ReviewOrderBy = ID_DESC): [Review]
@@ -13,8 +14,10 @@ type Query {
   search(query: String!): [SearchResult]
 }
 
+# union to perform FTS global search in graphQL
 union SearchResult = Book | Review | Author | User
 
+# search to find books
 type SearchBookResult {
   id: ID!
   title: String
@@ -23,11 +26,13 @@ type SearchBookResult {
   imageUrl(size: ImageSize = LARGE): String
 }
 
+# mutation to create a Book or add a Review
 type Mutation {
   createReview(reviewInput: ReviewInput!): Review
   createBook(googleBookId: ID!): Book
 }
 
+# create a review
 input ReviewInput {
   bookId: ID!
   rating: Int!
@@ -37,16 +42,19 @@ input ReviewInput {
   comment: String
 }
 
+# order DESC or ASC by a review criteria
 enum ReviewOrderBy {
   ID_ASC
   ID_DESC
 }
 
+# order DESC or ASC by a book criteria
 enum BooksOrderBy {
   RATING_DESC
   ID_DESC
 }
 
+# book fields
 type Book {
   id: ID!
   title: String!
@@ -59,11 +67,13 @@ type Book {
   reviews: [Review]
 }
 
+# author fields
 type Author {
   id: ID!
   name: String!
 }
 
+# review fields
 type Review {
   id: ID!
   rating: Int
@@ -73,12 +83,14 @@ type Review {
   user: User
 }
 
+# user fields
 type User {
   id: ID!
   name: String!
   imageUrl(size: Int = 50): String
 }
 
+# image size
 enum ImageSize {
   SMALL
   LARGE
