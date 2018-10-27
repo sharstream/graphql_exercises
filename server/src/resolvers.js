@@ -11,6 +11,9 @@ const resolvers = {
   SearchBookResult: {
     imageUrl: (result, args) => imageUrl(args.size, result.id),
   },
+  SearchResult: {
+    __resolveType: obj => obj.__type,
+  },
   Book: {
     imageUrl: (book, { size }) => imageUrl(size, book.googleId),
     authors: (book, args, context) => {
@@ -18,7 +21,7 @@ const resolvers = {
       const { findAuthorsByBookIdsLoader } = loaders;
       return findAuthorsByBookIdsLoader.load(book.id);
     },
-    reviews: (book, args, context) => {
+    reviews: (book, args , context) => {
       const { loaders } = context;
       const { findReviewsByBookIdsLoader } = loaders;
       return findReviewsByBookIdsLoader.load(book.id)
