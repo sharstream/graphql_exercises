@@ -50,9 +50,9 @@ export async function searchBook(query) {
   try {
     const result = await axios(url);
     const items = pathOr([],['data', 'items'], result);
-    console.log('items: ' + JSON.stringify(items));
+    // console.log('items: ' + JSON.stringify(items));
     const books = map(book => ({ id: book.id, ...book.volumeInfo}), items);
-    console.log('books: ' + JSON.stringify(books));
+    // console.log('books: ' + JSON.stringify(books));
     return books;
   } catch (error) {
     console.log(error);

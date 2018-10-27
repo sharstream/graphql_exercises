@@ -60,7 +60,9 @@ class AddBook extends Component {
       // TODO: add mutation to add book using graphql
       const variables = { googleBookId };
       const result = await fetch({ query: createBookMutation, variables });
+      // console.log('result: ' + JSON.stringify(result));
       const redirectBookId = path(['data', 'createBook', 'id'], result);
+      // console.log('redirectBookId: ' + redirectBookId);
       const errorList = pathOr([], ['errors'], result);
       const errors = map(error => error.message, errorList);
       this.setState({ redirectBookId, errors });
