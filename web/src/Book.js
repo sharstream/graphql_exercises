@@ -5,7 +5,6 @@ import { BookDetailReviews } from './components/Book';
 import Error from './components/Error';
 import fetch from './fetch';
 
-const findBookById = (id, books) => R.find(R.propEq('id', id), books);
 const query = `
 fragment Book on Book {
   id

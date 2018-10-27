@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import { BookListSection, SORT_BY } from './components/Book';
 import Error from './components/Error';
 import { RecentReviewSection } from './components/Review';
-import data from './data/';
 import fetch from './fetch';
 
 const query = `
