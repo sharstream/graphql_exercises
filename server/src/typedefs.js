@@ -10,7 +10,10 @@ type Query {
   users: [User]
   book(id: ID!): Book
   searchBook(query: String!): [SearchBookResult]
+  search(query: String!): [SearchResult]
 }
+
+union SearchResult = Book | Review | Author | User
 
 type SearchBookResult {
   id: ID!

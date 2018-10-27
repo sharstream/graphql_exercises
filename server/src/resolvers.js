@@ -2,6 +2,7 @@ import gravatar from 'gravatar';
 import { allBooks, imageUrl, searchBook, createBook } from './book';
 import { allReviews, createReview } from './review';
 import { allUsers } from './user';
+import { search } from './search';
 
 const resolvers = {
   User: {
@@ -49,6 +50,10 @@ const resolvers = {
     searchBook: (root, args) => {
       const { query } = args;
       return searchBook(query);
+    },
+    search: (root, args) => {
+      const { query } = args;
+      return search(query);
     },
   },
   Mutation: {
