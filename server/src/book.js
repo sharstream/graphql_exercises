@@ -1,16 +1,58 @@
 import { groupBy, map, pathOr } from 'ramda';
 import axios from 'axios';
+import stripTags from 'striptags';
 import DataLoader from 'dataloader';
 import query from './db';
+
+export async function createBook(googleBookId) {
+  try {
+    const book = await findBookByGoogleId(googleBookId);
+    const {
+      title = '',
+      subtitle = '',
+      description = '',
+      authors = [],
+      pageCount = 0,
+    } = book;
+    const sql = `
+    select * from hb.create_book($1, $2, $3, $4, $5, $6);
+    `;
+    const params = [
+      googleBookId,
+      stripTags(title),
+      stripTags(subtitle),
+      stripTags(description),
+      authors,
+      pageCount
+    ];
+    const result = await query(sql, params);
+    return result.rows[0];
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function findBookByGoogleId(googleBookId) {
+  const url = `https://www.googleapis.com/books/v1/volumes/${googleBookId}`;
+  try {
+    const result = await axios(url);
+    const book = pathOr({}, ['data'], result);
+    return { ...book, ...book.volumeInfo };
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 export async function searchBook(query) {
   const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`;
   try {
     const result = await axios(url);
     const items = pathOr([],['data', 'items'], result);
-    console.log('items: ' + items);
+    console.log('items: ' + JSON.stringify(items));
     const books = map(book => ({ id: book.id, ...book.volumeInfo}), items);
-    console.log('books: ' + books);
+    console.log('books: ' + JSON.stringify(books));
     return books;
   } catch (error) {
     console.log(error);
@@ -27,11 +69,6 @@ async function findBooksByIds(ids) {
   try {
     const result = await query(sql, params);
     const rowsById = groupBy((book) => book.id, result.rows);
-    // console.log(rowsById);
-    // console.log(map(id => {
-    //   const book = rowsById[id] ? rowsById[id][0] : null;
-    //   return book;
-    // }, ids));
     return map(id => {
       const book = rowsById[id] ? rowsById[id][0] : null;
       return book;

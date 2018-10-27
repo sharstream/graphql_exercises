@@ -22,6 +22,7 @@ type SearchBookResult {
 
 type Mutation {
   createReview(reviewInput: ReviewInput!): Review
+  createBook(googleBookId: ID!): Book
 }
 
 input ReviewInput {
