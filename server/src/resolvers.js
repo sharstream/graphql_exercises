@@ -21,7 +21,7 @@ const resolvers = {
       const { findAuthorsByBookIdsLoader } = loaders;
       return findAuthorsByBookIdsLoader.load(book.id);
     },
-    reviews: (book, args , context) => {
+    reviews: (book, args, context) => {
       const { loaders } = context;
       const { findReviewsByBookIdsLoader } = loaders;
       return findReviewsByBookIdsLoader.load(book.id)
